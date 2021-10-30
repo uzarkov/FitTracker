@@ -1,5 +1,6 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { TopBar } from '../components/TopBar';
 import { signOut } from '../contexts/auth-context/actions/signOut';
 import { useAuth } from '../contexts/auth-context/authContext';
 
@@ -11,15 +12,18 @@ export const DashboardView = () => {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>{'<Dashboard placeholder>'}</Text>
-            <Pressable
-                style={styles.button}
-                onPress={onSignOut}
-            >
-                <Text style={styles.text}>Sign out</Text>
-            </Pressable>
-        </View>
+        <>
+            <TopBar />
+            <View style={styles.container}>
+                <Text style={styles.text}>{'<Dashboard placeholder>'}</Text>
+                <Pressable
+                    style={styles.button}
+                    onPress={onSignOut}
+                >
+                    <Text style={styles.text}>Sign out</Text>
+                </Pressable>
+            </View>
+        </>
     )
 }
 

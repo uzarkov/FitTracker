@@ -1,11 +1,11 @@
 import React from 'react';
 import { AuthProvider } from './src/contexts/auth-context/authContext';
-import { SignInView } from './src/views/SignInView';
+import { ApplicationRouter } from './src/router/ApplicationRouter';
 
 export default App = () => {
   return (
     <AuthProvider>
-      <SignInView />
+      <ApplicationRouter />
     </AuthProvider>
   );
 }
