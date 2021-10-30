@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { Link } from 'react-router-native';
+import { NAVIGATION_ROUTE } from '../router/ProtectedContentRouting';
 
 export const TopBar = () => {
     return (
         <View style={styles.container}>
-            <Link to={'/navigation'} style={styles.link}>
+            <Link to={NAVIGATION_ROUTE} style={styles.link}>
                 <Text style={styles.text}>Navigate</Text>
             </Link>
         </View>
