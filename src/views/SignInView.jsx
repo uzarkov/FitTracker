@@ -4,6 +4,8 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../contexts/auth-context/authContext';
 import { signIn } from '../contexts/auth-context/actions/signIn';
 import { DashboardView } from './DashboardView';
+import { Link } from 'react-router-native';
+import { SIGN_UP_ROUTE } from '../router/PublicContentRouting';
 
 export const SignInView = () => {
     const [authState, authDispatch] = useAuth();
@@ -49,6 +51,9 @@ export const SignInView = () => {
             >
                 <Text style={styles.text}>Sign in</Text>
             </Pressable>
+            <Link to={SIGN_UP_ROUTE}>
+                <Text style={styles.text}>Sign up</Text>
+            </Link>
             <StatusBar style="auto" />
         </View>
     )
