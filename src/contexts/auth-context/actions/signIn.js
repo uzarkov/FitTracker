@@ -28,7 +28,7 @@ export const signInReducer = (state, action) => {
             return {
                 ...state,
                 fetching: false,
-                user: action.payload,
+                user: action.payload.user,
             }
         }
         case `${USER_SIGN_IN_ACTION_PREFIX}-failure`: {

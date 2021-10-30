@@ -40,8 +40,11 @@ describe('signInReducer', () => {
         const action = {
             type: `${USER_SIGN_IN_ACTION_PREFIX}-success`,
             payload: {
-                username: "sampleUsername",
-                password: "samplePassword",
+                user: {
+                    displayName: "sampleUserDisplayName",
+                    email: "sampleUserEmail",
+                    uid: "sampleUserUid"
+                }
             }
         }
 
@@ -50,7 +53,7 @@ describe('signInReducer', () => {
 
         // then
         expect(newState).toStrictEqual({
-            user: action.payload,
+            user: action.payload.user,
             fetching: false,
             error: null,
         })
