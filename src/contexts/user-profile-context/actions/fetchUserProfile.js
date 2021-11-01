@@ -1,12 +1,11 @@
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import { FirebaseApp } from '../../../firebase/config';
+import { doc, getDoc } from 'firebase/firestore';
+import { Firestore } from '../../../firebase/config';
 import { FETCH_USER_PROFILE_ACTION_PREFIX } from '../constants';
 
 export const fetchUserProfile = (dispatch, { uid }) => {
     dispatch({ type: `${FETCH_USER_PROFILE_ACTION_PREFIX}-request` });
 
-    const db = getFirestore(FirebaseApp);
-    const docRef = doc(db, 'users', uid)
+    const docRef = doc(Firestore, 'users', uid)
 
     getDoc(docRef)
         .then(docSnap => {
