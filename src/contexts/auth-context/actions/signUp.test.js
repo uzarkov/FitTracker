@@ -1,7 +1,7 @@
-import { USER_SIGN_IN_ACTION_PREFIX } from "../constants"
-import { signInReducer } from "./signIn"
+import { USER_SIGN_UP_ACTION_PREFIX } from "../constants"
+import { signUpReducer } from "./signUp"
 
-describe('signInReducer', () => {
+describe('signUpReducer', () => {
     const sampleState = {
         user: {},
         fetching: false,
@@ -14,35 +14,35 @@ describe('signInReducer', () => {
         // given
         const startingState = {
             ...sampleState,
-            error: {
+            signingUpError: {
                 message: "Some error message",
             }
         }
 
-        const action = { type: `${USER_SIGN_IN_ACTION_PREFIX}-request` }
+        const action = { type: `${USER_SIGN_UP_ACTION_PREFIX}-request` }
 
         // when
-        const newState = signInReducer(startingState, action)
+        const newState = signUpReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({
             user: {},
-            fetching: true,
+            fetching: false,
             error: null,
-            signingUp: false,
+            signingUp: true,
             signingUpError: null,
         })
     })
 
-    it('given success action should initialize user auth data', () => {
+    it('given success action should set signed up flag to true', () => {
         // given
         const startingState = {
             ...sampleState,
-            fetching: true,
+            signingUp: true,
         }
 
         const action = {
-            type: `${USER_SIGN_IN_ACTION_PREFIX}-success`,
+            type: `${USER_SIGN_UP_ACTION_PREFIX}-success`,
             payload: {
                 user: {
                     displayName: "sampleUserDisplayName",
@@ -53,11 +53,11 @@ describe('signInReducer', () => {
         }
 
         // when
-        const newState = signInReducer(startingState, action)
+        const newState = signUpReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({
-            user: action.payload.user,
+            user: {},
             fetching: false,
             error: null,
             signingUp: false,
@@ -69,26 +69,26 @@ describe('signInReducer', () => {
         // given
         const startingState = {
             ...sampleState,
-            fetching: true,
+            signingUp: true,
         }
 
         const action = {
-            type: `${USER_SIGN_IN_ACTION_PREFIX}-failure`,
+            type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`,
             error: {
                 message: "Some error message",
             }
         }
 
         // when
-        const newState = signInReducer(startingState, action)
+        const newState = signUpReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({
             user: {},
             fetching: false,
-            error: action.error,
+            error: null,
             signingUp: false,
-            signingUpError: null,
+            signingUpError: action.error,
         })
     })
 })

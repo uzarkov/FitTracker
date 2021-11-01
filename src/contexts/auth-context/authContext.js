@@ -7,6 +7,8 @@ const initialState = {
     user: {},
     fetching: false,
     error: null,
+    signingUp: false,
+    signingUpError: null,
 }
 
 export const AuthProvider = ({ children }) => {

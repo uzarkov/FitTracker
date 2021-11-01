@@ -52,7 +52,7 @@ export const SignInView = () => {
                 <Text style={styles.text}>Sign in</Text>
             </Pressable>
             <Link to={SIGN_UP_ROUTE}>
-                <Text style={styles.text}>Sign up</Text>
+                <Text style={styles.text}>{'Sign up ->'}</Text>
             </Link>
             <StatusBar style="auto" />
         </View>

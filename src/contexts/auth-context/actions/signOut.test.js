@@ -9,6 +9,8 @@ describe('signOutReducer', () => {
         },
         fetching: false,
         error: null,
+        signingUp: false,
+        signingUpError: null,
     }
 
     it('given request action should reset state', () => {
@@ -30,6 +32,8 @@ describe('signOutReducer', () => {
             user: sampleState.user,
             fetching: false,
             error: null,
+            signingUp: false,
+            signingUpError: null,
         })
     })
 
@@ -46,6 +50,8 @@ describe('signOutReducer', () => {
             user: {},
             fetching: false,
             error: null,
+            signingUp: false,
+            signingUpError: null,
         })
     })
 
@@ -68,6 +74,8 @@ describe('signOutReducer', () => {
             user: sampleState.user,
             fetching: false,
             error: action.error,
+            signingUp: false,
+            signingUpError: null,
         })
     })
 })
