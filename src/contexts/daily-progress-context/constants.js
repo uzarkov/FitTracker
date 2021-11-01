@@ -1,0 +1,1 @@
+export const FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX = 'daily-progress/fetch/single-day';
