@@ -9,12 +9,15 @@ export const fetchSingleDayProgress = (dispatch, { uid, date, caloricDemand = 0 
 
     getDoc(docRef)
         .then(docSnap => {
-            dispatch({ type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-success`, payload: getDailyProgressFrom(docSnap, date, caloricDemand) });
+            dispatch({
+                type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-success`,
+                payload: docSnap.exists() ? docSnap.data() : getDailyProgressPlaceholder(date, caloricDemand),
+            });
         })
 }
 
-const getDailyProgressFrom = (docSnap, date, caloricDemand) => {
-    const placeholderPayload = {
+export const getDailyProgressPlaceholder = (date, caloricDemand) => {
+    return {
         activities: [],
         date: date,
         products: [],
@@ -25,8 +28,6 @@ const getDailyProgressFrom = (docSnap, date, caloricDemand) => {
         totalProteins: 0,
         isPlaceholder: true,
     }
-
-    return docSnap.exists() ? docSnap.data() : placeholderPayload;
 }
 
 export const fetchSingleDayProgressReducer = (state, action) => {

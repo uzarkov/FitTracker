@@ -1,11 +1,29 @@
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { TopBar } from '../components/TopBar';
 import { signOut } from '../contexts/auth-context/actions/signOut';
 import { useAuth } from '../contexts/auth-context/authContext';
+import { fetchSingleDayProgress, getDailyProgressPlaceholder } from '../contexts/daily-progress-context/actions/fetchSingleDayProgress';
+import { useDailyProgress } from '../contexts/daily-progress-context/dailyProgressContext';
 
 export const DashboardView = () => {
-    const [, authDispatch] = useAuth();
+    const [authState, authDispatch] = useAuth();
+    const { user } = authState;
+
+    const [dailyProgressState, dailyProgressDispatch] = useDailyProgress();
+    const { days, fetching, error } = dailyProgressState;
+
+    const today = moment().format('DD-MM-YYYY');
+    const dailyProgress = days[today] || getDailyProgressPlaceholder(today, 0);
+
+    useEffect(() => {
+        fetchSingleDayProgress(dailyProgressDispatch, {
+            uid: user.uid,
+            date: today,
+            caloricDemand: 0, // TODO: Use caloric demand from active goal here
+        });
+    }, [])
 
     const onSignOut = () => {
         signOut(authDispatch)
@@ -15,7 +33,12 @@ export const DashboardView = () => {
         <>
             <TopBar />
             <View style={styles.container}>
-                <Text style={styles.text}>{'<Dashboard placeholder>'}</Text>
+                <Text style={styles.text}>{`Date: ${dailyProgress.date}`}</Text>
+                <Text style={styles.text}>{`Target kcal: ${dailyProgress.targetKcal}`}</Text>
+                <Text style={styles.text}>{`Total kcal: ${dailyProgress.totalKcal}`}</Text>
+                <Text style={styles.text}>{`Total carbs: ${dailyProgress.totalCarbs}`}</Text>
+                <Text style={styles.text}>{`Total proteins: ${dailyProgress.totalProteins}`}</Text>
+                <Text style={styles.text}>{`Total fats: ${dailyProgress.totalFats}`}</Text>
                 <Pressable
                     style={styles.button}
                     onPress={onSignOut}
