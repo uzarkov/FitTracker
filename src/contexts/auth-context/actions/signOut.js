@@ -2,10 +2,11 @@ import { getAuth, signOut as signUserOut } from 'firebase/auth';
 import { FirebaseApp } from '../../../firebase/config';
 import { USER_SIGN_OUT_ACTION_PREFIX } from '../constants';
 
-const auth = getAuth(FirebaseApp);
-
 export const signOut = (dispatch) => {
     dispatch({ type: `${USER_SIGN_OUT_ACTION_PREFIX}-request` });
+
+    const auth = getAuth(FirebaseApp);
+
     signUserOut(auth)
         .then(() => {
             dispatch({ type: `${USER_SIGN_OUT_ACTION_PREFIX}-success` })
