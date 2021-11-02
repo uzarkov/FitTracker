@@ -1,7 +1,7 @@
-import { FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX } from "../constants"
-import { fetchSingleDayProgressReducer } from "./fetchSingleDayProgress"
+import { FETCH_DAILY_PROGRESS_ACTION_PREFIX } from "../constants"
+import { fetchDailyProgressReducer } from "./fetchDailyProgress"
 
-describe('fetchSingleDayProgressReducer', () => {
+describe('fetchDailyProgressReducer', () => {
     const sampleState = {
         days: {},
         fetching: false,
@@ -17,10 +17,10 @@ describe('fetchSingleDayProgressReducer', () => {
             }
         }
 
-        const action = { type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-request` }
+        const action = { type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-request` }
 
         // when
-        const newState = fetchSingleDayProgressReducer(startingState, action)
+        const newState = fetchDailyProgressReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({
@@ -38,7 +38,7 @@ describe('fetchSingleDayProgressReducer', () => {
         }
 
         const action = {
-            type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-success`,
+            type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-success`,
             payload: {
                 activities: [{
                     name: "Running",
@@ -57,7 +57,7 @@ describe('fetchSingleDayProgressReducer', () => {
         }
 
         // when
-        const newState = fetchSingleDayProgressReducer(startingState, action)
+        const newState = fetchDailyProgressReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({
@@ -77,14 +77,14 @@ describe('fetchSingleDayProgressReducer', () => {
         }
 
         const action = {
-            type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-failure`,
+            type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-failure`,
             error: {
                 message: "Some error message",
             }
         }
 
         // when
-        const newState = fetchSingleDayProgressReducer(startingState, action)
+        const newState = fetchDailyProgressReducer(startingState, action)
 
         // then
         expect(newState).toStrictEqual({

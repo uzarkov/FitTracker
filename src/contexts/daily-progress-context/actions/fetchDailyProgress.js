@@ -1,45 +1,32 @@
 import { doc, getDoc } from 'firebase/firestore';
 import { Firestore } from '../../../firebase/config';
-import { FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX } from "../constants"
+import { FETCH_DAILY_PROGRESS_ACTION_PREFIX } from "../constants"
+import { getDailyProgressPlaceholder } from '../utils';
 
-export const fetchSingleDayProgress = (dispatch, { uid, date, caloricDemand = 0 }) => {
-    dispatch({ type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-request` });
+export const fetchDailyProgress = (dispatch, { uid, date, caloricDemand = 0 }) => {
+    dispatch({ type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-request` });
 
     const docRef = doc(Firestore, 'users', uid, 'daily-progresses', date);
 
     getDoc(docRef)
         .then(docSnap => {
             dispatch({
-                type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-success`,
+                type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-success`,
                 payload: docSnap.exists() ? docSnap.data() : getDailyProgressPlaceholder(date, caloricDemand),
             });
         })
 }
 
-export const getDailyProgressPlaceholder = (date, caloricDemand) => {
-    return {
-        activities: [],
-        date: date,
-        products: [],
-        targetKcal: caloricDemand,
-        totalCarbs: 0,
-        totalFats: 0,
-        totalKcal: 0,
-        totalProteins: 0,
-        isPlaceholder: true,
-    }
-}
-
-export const fetchSingleDayProgressReducer = (state, action) => {
+export const fetchDailyProgressReducer = (state, action) => {
     switch (action.type) {
-        case `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-request`: {
+        case `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-request`: {
             return {
                 ...state,
                 fetching: true,
                 error: null,
             }
         }
-        case `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-success`: {
+        case `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-success`: {
             const dailyProgress = action.payload;
             return {
                 ...state,
@@ -50,7 +37,7 @@ export const fetchSingleDayProgressReducer = (state, action) => {
                 }
             }
         }
-        case `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-failure`: {
+        case `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-failure`: {
             return {
                 ...state,
                 fetching: false,

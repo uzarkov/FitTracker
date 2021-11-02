@@ -1,9 +1,11 @@
-import { FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX } from "./constants"
+import { FETCH_DAILY_PROGRESS_ACTION_PREFIX, UPDATE_DAILY_PROGRESS_ACTION_PREFIX } from "./constants"
 import { dailyProgressReducer } from "./dailyProgressReducer"
 
-jest.mock('./actions/fetchSingleDayProgress')
+jest.mock('./actions/fetchDailyProgress')
+jest.mock('./actions/updateDailyProgress')
 
-const { fetchSingleDayProgressReducer } = require('./actions/fetchSingleDayProgress')
+const { fetchDailyProgressReducer } = require('./actions/fetchDailyProgress')
+const { updateDailyProgressReducer } = require('./actions/updateDailyProgress')
 
 describe('dailyProgressReducer', () => {
     const sampleState = {
@@ -13,17 +15,29 @@ describe('dailyProgressReducer', () => {
     }
 
     beforeEach(() => {
-        fetchSingleDayProgressReducer.mockReset()
+        fetchDailyProgressReducer.mockReset()
+        updateDailyProgressReducer.mockReset()
     })
 
-    it('given sign in action should call correct reducer', () => {
+    it('given fetch action should call correct reducer', () => {
         // given
-        const action = { type: `${FETCH_SINGLE_DAY_PROGRESS_ACTION_PREFIX}-request` }
+        const action = { type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-request` }
 
         // when
         dailyProgressReducer({ ...sampleState }, action)
 
         // then
-        expect(fetchSingleDayProgressReducer).toBeCalled()
+        expect(fetchDailyProgressReducer).toBeCalled()
+    })
+
+    it('given update action should call correct reducer', () => {
+        // given
+        const action = { type: `${UPDATE_DAILY_PROGRESS_ACTION_PREFIX}-request` }
+
+        // when
+        updateDailyProgressReducer({ ...sampleState }, action)
+
+        // then
+        expect(updateDailyProgressReducer).toBeCalled()
     })
 })
