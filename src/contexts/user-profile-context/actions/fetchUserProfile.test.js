@@ -41,8 +41,7 @@ describe('fetchUserProfileReducer', () => {
             type: `${FETCH_USER_PROFILE_ACTION_PREFIX}-success`,
             payload: {
                 birthDate: "01-01-2000",
-                name: "Jan",
-                surname: "Kowalski"
+                name: "Jan Kowalski",
             }
         }
 

@@ -20,7 +20,7 @@ export const ProfileView = () => {
         <>
             <TopBar />
             <View style={styles.container}>
-                <Text style={styles.text}>{`Name: ${userProfile.name} ${userProfile.surname}`}</Text>
+                <Text style={styles.text}>{`Name: ${userProfile.name}`}</Text>
                 <Text style={styles.text}>{`Birthdate: ${userProfile.birthDate}`}</Text>
             </View>
         </>

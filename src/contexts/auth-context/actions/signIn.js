@@ -40,7 +40,7 @@ export const signInReducer = (state, action) => {
             }
         }
         default: {
-            throw new Error(`Unhandled exception type ${action.type}`);
+            throw new Error(`Unhandled action type ${action.type}`);
         }
     }
 }
