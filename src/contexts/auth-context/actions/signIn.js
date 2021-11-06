@@ -2,10 +2,11 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { FirebaseApp } from '../../../firebase/config';
 import { USER_SIGN_IN_ACTION_PREFIX } from '../constants';
 
-const auth = getAuth(FirebaseApp);
-
 export const signIn = (dispatch, { email, password }) => {
     dispatch({ type: `${USER_SIGN_IN_ACTION_PREFIX}-request` });
+
+    const auth = getAuth(FirebaseApp);
+
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
             dispatch({ type: `${USER_SIGN_IN_ACTION_PREFIX}-success`, payload: userCredentials })
@@ -39,7 +40,7 @@ export const signInReducer = (state, action) => {
             }
         }
         default: {
-            throw new Error(`Unhandled exception type ${action.type}`);
+            throw new Error(`Unhandled action type ${action.type}`);
         }
     }
 }

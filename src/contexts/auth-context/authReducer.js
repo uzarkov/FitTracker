@@ -8,6 +8,6 @@ export const authReducer = (state, action) => {
     } else if (action.type.startsWith(USER_SIGN_OUT_ACTION_PREFIX)) {
         return signOutReducer(state, action);
     } else {
-        throw new Error(`Unhandled exception type ${action.type}`);
+        throw new Error(`Unhandled action type ${action.type}`);
     }
 }

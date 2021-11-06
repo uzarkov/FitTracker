@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-native';
+import { UserProfileProvider } from '../contexts/user-profile-context/userProfileContext';
 import { DashboardView } from '../views/DashboardView';
 import { GoalsView } from '../views/GoalsView';
 import { HistoryView } from '../views/HistoryView';
@@ -17,12 +18,14 @@ export const HISTORY_ROUTE = '/history'
 export const ProtectedContentRouting = () => {
     return (
         <Switch>
-            <Route exact path={DASHBOARD_ROUTE} component={DashboardView} />
-            <Route exact path={NAVIGATION_ROUTE} component={NavigationView} />
-            <Route exact path={PROFILE_ROUTE} component={ProfileView} />
-            <Route exact path={GOALS_ROUTE} component={GoalsView} />
-            <Route exact path={STATS_ROUTE} component={StatsView} />
-            <Route exact path={HISTORY_ROUTE} component={HistoryView} />
+            <UserProfileProvider>
+                <Route exact path={DASHBOARD_ROUTE} component={DashboardView} />
+                <Route exact path={NAVIGATION_ROUTE} component={NavigationView} />
+                <Route exact path={PROFILE_ROUTE} component={ProfileView} />
+                <Route exact path={GOALS_ROUTE} component={GoalsView} />
+                <Route exact path={STATS_ROUTE} component={StatsView} />
+                <Route exact path={HISTORY_ROUTE} component={HistoryView} />
+            </UserProfileProvider>
         </Switch>
     )
 }
