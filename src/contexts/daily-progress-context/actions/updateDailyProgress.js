@@ -39,6 +39,8 @@ export const updateDailyProgressReducer = (state, action, originalDailyProgressW
             const { date } = updatedDailyProgress;
 
             originalDailyProgressWrapper.set(state.days[date]);
+            // Original daily progress won't ever be undefined at this point because
+            // of placeholder setting when fetched daily progress does not exist
             assert(originalDailyProgressWrapper.get());
 
             return {
