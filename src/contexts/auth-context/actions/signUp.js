@@ -1,20 +1,32 @@
 import { createUserWithEmailAndPassword, getAuth } from "@firebase/auth";
 import { FirebaseApp } from "../../../firebase/config";
+import { updateUserProfile } from "../../user-profile-context/actions/updateUserProfile";
 import { USER_SIGN_UP_ACTION_PREFIX } from "../constants"
 
-export const signUp = (dispatch, { email, password, name, birthDate }) => {
-    dispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-request` });
+export const signUp = (authDispatch, userProfileDispatch, { email, password, name, birthDate }) => {
+    authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-request` });
 
     const auth = getAuth(FirebaseApp);
 
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
-            // TODO: Add user profile with {name} and {birthDate}
-            dispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-success`, payload: userCredentials })
+            const uid = userCredentials.user.uid
+            createUserProfile(userProfileDispatch, uid, name, birthDate)
+            authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-success` })
         })
         .catch((error) => {
-            dispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`, error: error })
+            authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`, error: error })
         });
+}
+
+const createUserProfile = (userProfileDispatch, uid, name, birthDate) => {
+    updateUserProfile(userProfileDispatch, {
+        uid: uid,
+        updatedProfile: {
+            name: name,
+            birthDate: birthDate,
+        }
+    })
 }
 
 export const signUpReducer = (state, action) => {

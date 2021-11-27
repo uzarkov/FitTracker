@@ -5,10 +5,13 @@ import { signUp } from '../contexts/auth-context/actions/signUp';
 import { useAuth } from '../contexts/auth-context/authContext';
 import { SIGN_IN_ROUTE } from '../router/PublicContentRouting';
 import { Redirect } from 'react-router-native';
+import { useUserProfile } from '../contexts/user-profile-context/userProfileContext';
 
 export const SignUpView = () => {
     const [authState, authDispatch] = useAuth();
     const { signingUp, signingUpError } = authState;
+
+    const [, userProfileDispatch] = useUserProfile();
 
     const [signingUpPrevState, setSigningUpPrevState] = useState(false);
     const [signedUp, setSignedUp] = useState(false);
@@ -27,7 +30,7 @@ export const SignUpView = () => {
     }, [signingUp])
 
     const onSignUp = () => {
-        signUp(authDispatch, {
+        signUp(authDispatch, userProfileDispatch, {
             email: emailInput,
             password: passwordInput,
             name: nameInput,
