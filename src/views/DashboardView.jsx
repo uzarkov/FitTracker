@@ -22,7 +22,7 @@ export const DashboardView = () => {
         fetchDailyProgress(dailyProgressDispatch, {
             uid: user.uid,
             date: today,
-            caloricDemand: 0, // TODO: Use caloric demand from active goal here
+            defaultCaloricDemand: 0, // TODO: Use caloric demand from active goal here
         });
     }, [])
 

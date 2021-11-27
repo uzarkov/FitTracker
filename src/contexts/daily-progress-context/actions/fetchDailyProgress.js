@@ -3,7 +3,7 @@ import { Firestore } from '../../../firebase/config';
 import { FETCH_DAILY_PROGRESS_ACTION_PREFIX } from "../constants"
 import { getDailyProgressPlaceholder } from '../utils';
 
-export const fetchDailyProgress = (dispatch, { uid, date, caloricDemand = 0 }) => {
+export const fetchDailyProgress = (dispatch, { uid, date, defaultCaloricDemand = 0 }) => {
     dispatch({ type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-request` });
 
     const docRef = doc(Firestore, 'users', uid, 'daily-progresses', date);
@@ -12,7 +12,7 @@ export const fetchDailyProgress = (dispatch, { uid, date, caloricDemand = 0 }) =
         .then(docSnap => {
             dispatch({
                 type: `${FETCH_DAILY_PROGRESS_ACTION_PREFIX}-success`,
-                payload: docSnap.exists() ? docSnap.data() : getDailyProgressPlaceholder(date, caloricDemand),
+                payload: docSnap.exists() ? docSnap.data() : getDailyProgressPlaceholder(date, defaultCaloricDemand),
             });
         })
 }
