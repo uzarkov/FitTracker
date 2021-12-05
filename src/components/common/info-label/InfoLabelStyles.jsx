@@ -15,6 +15,6 @@ export const styles = StyleSheet.create({
     },
     value: {
        color: '#03DAC5',
-        fontSize: 20
+       fontSize: 20
     }
 });

@@ -24,19 +24,19 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 20
     },
+    text: {
+      color: 'white',
+      fontWeight: 'bold'
+    },
     group: {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
     title: {
-        color: 'white',
-        fontWeight: 'bold',
         fontSize: 30,
     },
     goal: {
-        color: 'white',
-        fontWeight: 'bold',
         fontSize: 20
     }
 })

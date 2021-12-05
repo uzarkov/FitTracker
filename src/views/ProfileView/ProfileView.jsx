@@ -36,7 +36,7 @@ export const ProfileView = () => {
                             color={"#03DAC5"}
                             size={80}
                         />
-                        <Text style={styles.title}>
+                        <Text style={[styles.title, styles.text]}>
                             {userProfile.name}
                         </Text>
                     </View>
@@ -50,7 +50,7 @@ export const ProfileView = () => {
                         value={userProfile.birthDate}
                     />
                     <View style={styles.group}>
-                        <Text style={styles.goal}>
+                        <Text style={[styles.goal, styles.text]}>
                             {CURRENT_GOAL}
                         </Text>
                         {/*TODO: fetch info about current progress */}
