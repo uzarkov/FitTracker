@@ -3,6 +3,7 @@ import { ProtectedContentRouting } from './ProtectedContentRouting';
 import { PublicContentRouting } from './PublicContentRouting';
 import { NativeRouter } from 'react-router-native';
 import { useAuth } from '../contexts/auth-context/authContext';
+import { UserProfileProvider } from '../contexts/user-profile-context/userProfileContext';
 
 export const ApplicationRouter = () => {
     const [authState] = useAuth();
@@ -12,7 +13,9 @@ export const ApplicationRouter = () => {
 
     return (
         <NativeRouter>
-            {signedIn ? <ProtectedContentRouting /> : <PublicContentRouting />}
+            <UserProfileProvider>
+                {signedIn ? <ProtectedContentRouting /> : <PublicContentRouting />}
+            </UserProfileProvider>
         </NativeRouter>
     )
 }
