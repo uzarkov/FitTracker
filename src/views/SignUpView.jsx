@@ -33,6 +33,7 @@ export const SignUpView = () => {
         signUp(authDispatch, userProfileDispatch, {
             email: emailInput,
             password: passwordInput,
+            passwordConfirmation: passwordConfirmationInput,
             name: nameInput,
             birthDate: birthDateInput,
         })

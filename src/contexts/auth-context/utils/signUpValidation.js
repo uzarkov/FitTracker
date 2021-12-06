@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-export const validateSignUp = (password, name, birthDate) => {
+export const validateSignUp = (password, passwordConfirmation, name, birthDate) => {
     validateName(name);
-    validatePassword(password);
+    validatePassword(password, passwordConfirmation);
     validateBirthDate(birthDate);
 }
 
@@ -12,7 +12,7 @@ const validateName = (name) => {
     }
 }
 
-const validatePassword = (password) => {
+const validatePassword = (password, passwordConfirmation) => {
     if (password.length < 8) {
         throw new Error("Password has to be at least 8 characters long")
     }
@@ -23,6 +23,10 @@ const validatePassword = (password) => {
 
     if (password.search(/[~`!@#$%^&*()_\-+={[}\]\|\:;"'<,>\.?/]+/) == -1) {
         throw new Error("Password has to contain at least one special character (~`! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/)")
+    }
+
+    if (passwordConfirmation !== password) {
+        throw new Error("Given passwords do not match")
     }
 }
 

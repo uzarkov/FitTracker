@@ -4,11 +4,11 @@ import { updateUserProfile } from "../../user-profile-context/actions/updateUser
 import { USER_SIGN_UP_ACTION_PREFIX } from "../constants";
 import { validateSignUp } from "../utils/signUpValidation";
 
-export const signUp = (authDispatch, userProfileDispatch, { email, password, name, birthDate }) => {
+export const signUp = (authDispatch, userProfileDispatch, { email, password, passwordConfirmation, name, birthDate }) => {
     authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-request` });
 
     try {
-        validateSignUp(email, password, name, birthDate);
+        validateSignUp(password, passwordConfirmation, name, birthDate);
     } catch (error) {
         authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`, error: error });
         return;
