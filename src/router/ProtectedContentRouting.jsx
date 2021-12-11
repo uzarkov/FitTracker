@@ -6,7 +6,7 @@ import { DashboardView } from '../views/DashboardView';
 import { GoalsView } from '../views/GoalsView';
 import { HistoryView } from '../views/HistoryView';
 import { NavigationView } from '../views/NavigationView';
-import { ProfileView } from '../views/ProfileView';
+import { ProfileView } from '../views/ProfileView/ProfileView';
 import { StatsView } from '../views/StatsView';
 
 export const DASHBOARD_ROUTE = '/'
