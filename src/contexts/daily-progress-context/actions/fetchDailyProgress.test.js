@@ -30,7 +30,7 @@ describe('fetchDailyProgressReducer', () => {
         })
     })
 
-    it('given success action should initialize user auth data', () => {
+    it('given success action should initialize state', () => {
         // given
         const startingState = {
             ...sampleState,

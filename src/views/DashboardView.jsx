@@ -1,7 +1,8 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { TopBar } from '../components/TopBar';
+import { addActivity, removeActivity } from '../contexts/activity-context/actions';
 import { signOut } from '../contexts/auth-context/actions/signOut';
 import { useAuth } from '../contexts/auth-context/authContext';
 import { fetchDailyProgress } from '../contexts/daily-progress-context/actions/fetchDailyProgress';
@@ -30,33 +31,77 @@ export const DashboardView = () => {
         signOut(authDispatch)
     }
 
+    const addDailyProgressActivity = () => {
+        addActivity(dailyProgressDispatch, {
+            uid: user.uid,
+            dailyProgress,
+            newActivity: {
+                name: "Running",
+                burnedKcal: 500
+            }
+        })
+    }
+
+    const removeDailyProgressActivity = (index) => {
+        removeActivity(dailyProgressDispatch, {
+            uid: user.uid,
+            dailyProgress,
+            index,
+        })
+    }
+
     return (
         <>
             <TopBar />
-            <View style={styles.container}>
-                <Text style={styles.text}>{`Date: ${dailyProgress.date}`}</Text>
-                <Text style={styles.text}>{`Target kcal: ${dailyProgress.targetKcal}`}</Text>
-                <Text style={styles.text}>{`Total kcal: ${dailyProgress.totalKcal}`}</Text>
-                <Text style={styles.text}>{`Total carbs: ${dailyProgress.totalCarbs}`}</Text>
-                <Text style={styles.text}>{`Total proteins: ${dailyProgress.totalProteins}`}</Text>
-                <Text style={styles.text}>{`Total fats: ${dailyProgress.totalFats}`}</Text>
-                <Pressable
-                    style={styles.button}
-                    onPress={onSignOut}
-                >
-                    <Text style={styles.text}>Sign out</Text>
-                </Pressable>
+            <View style={styles.mainContainer}>
+                <ScrollView contentContainerStyle={styles.container} style={styles.scrollView}>
+                    <Text style={styles.text}>{`Date: ${dailyProgress.date}`}</Text>
+                    <Text style={styles.text}>{`Target kcal: ${dailyProgress.targetKcal}`}</Text>
+                    <Text style={styles.text}>{`Total kcal: ${dailyProgress.totalKcal}`}</Text>
+                    <Text style={styles.text}>{`Total carbs: ${dailyProgress.totalCarbs}`}</Text>
+                    <Text style={styles.text}>{`Total proteins: ${dailyProgress.totalProteins}`}</Text>
+                    <Text style={styles.text}>{`Total fats: ${dailyProgress.totalFats}`}</Text>
+                    {dailyProgress.activities.map((activity, idx) => (
+                        <>
+                            <Text style={styles.text}>{`Name: ${activity.name}`}</Text>
+                            <Text style={styles.text}>{`Kcal: ${activity.burnedKcal}`}</Text>
+                            <Pressable
+                                style={styles.button}
+                                onPress={() => removeDailyProgressActivity(idx)}
+                            >
+                                <Text style={styles.text}>Remove</Text>
+                            </Pressable>
+                        </>
+                    ))}
+                    <Pressable
+                        style={styles.button}
+                        onPress={onSignOut}
+                    >
+                        <Text style={styles.text}>Sign out</Text>
+                    </Pressable>
+                    <Pressable
+                        style={styles.button}
+                        onPress={addDailyProgressActivity}
+                    >
+                        <Text style={styles.text}>Add some activity</Text>
+                    </Pressable>
+                </ScrollView>
             </View>
         </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
         flex: 1,
         backgroundColor: '#353535',
+    },
+    container: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    scrollView: {
+        height: Dimensions.get('window').height,
     },
     text: {
         color: 'white',

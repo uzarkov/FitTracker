@@ -8,5 +8,6 @@ export const getDailyProgressPlaceholder = (date, caloricDemand) => {
         totalFats: 0,
         totalKcal: 0,
         totalProteins: 0,
+        isPlaceholder: true,
     }
 }
