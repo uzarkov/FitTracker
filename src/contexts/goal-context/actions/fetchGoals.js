@@ -10,7 +10,7 @@ export const fetchGoals = (dispatch, { uid }) => {
 
     getDocs(collectionRef)
         .then(querySnap => {
-            const docs = querySnap.map(doc => doc.data())
+            const docs = querySnap.docs.map(doc => doc.data())
             dispatch({ type: `${FETCH_GOALS_ACTION_PREFIX}-success`, payload: docs })
         })
         .catch(error => {
@@ -30,8 +30,8 @@ export const fetchGoalsReducer = (state, action) => {
         case `${FETCH_GOALS_ACTION_PREFIX}-success`: {
             const goals = [...action.payload];
             goals.sort((a, b) => {
-                const dateA = moment(a.startDate, "DD-MM-YYYY hh:mm:ss")
-                const dateB = moment(b.startDate, "DD-MM-YYYY hh:mm:ss")
+                const dateA = moment(a.startDate, "DD-MM-YYYY HH:mm:ss")
+                const dateB = moment(b.startDate, "DD-MM-YYYY HH:mm:ss")
                 return dateA.isAfter(dateB) ? -1 : 1
             })
 

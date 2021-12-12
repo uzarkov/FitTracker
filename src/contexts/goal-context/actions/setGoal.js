@@ -1,4 +1,4 @@
-import { collection, addDoc, updateDoc, where, doc, getDocs } from "@firebase/firestore";
+import { collection, addDoc, updateDoc, where, doc, getDocs, query } from "@firebase/firestore";
 import { Firestore } from "../../../firebase/config";
 import { SET_GOAL_ACTION_PREFIX } from "../constants"
 
@@ -8,22 +8,21 @@ export const setGoal = (dispatch, { uid, goal }) => {
     const collectionRef = collection(Firestore, 'users', uid, 'goals');
     const q = query(collectionRef, where('active', '==', true));
 
-    getDocs(q)
-        .then(docs => docs.forEach(doc => deactivateGoal(doc.id)));
-
     const newGoal = {
         ...goal,
         active: true,
     }
 
-    addDoc(collectionRef, newGoal)
+    getDocs(q)
+        .then(querySnap => Promise.all(querySnap.docs.map(doc => deactivateGoal(uid, doc.id))))
+        .then(() => addDoc(collectionRef, newGoal))
         .then(() => onSuccess(dispatch, newGoal), () => onFailure(dispatch))
 }
 
-const deactivateGoal = (goalId) => {
+const deactivateGoal = (uid, goalId) => {
     const docRef = doc(Firestore, 'users', uid, 'goals', goalId)
 
-    updateDoc(docRef, {
+    return updateDoc(docRef, {
         active: false
     })
 }

@@ -3,7 +3,7 @@ export const FETCH_GOALS_ACTION_PREFIX = 'goal/fetch/all';
 export const SET_GOAL_ACTION_PREFIX = 'goal/set';
 
 export const GOAL_TYPES = {
-    LOSE_WEIGHT: 1,
-    MAINTAIN_WEIGHT: 2,
-    GAIN_WEIGHT: 3,
+    LOSE_WEIGHT: "LOSE_WEIGHT",
+    MAINTAIN_WEIGHT: "MAINTAIN_WEIGHT",
+    GAIN_WEIGHT: "GAIN_WEIGHT",
 }
