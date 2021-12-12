@@ -38,6 +38,12 @@ export const GoalsView = () => {
                 <TopBar />
                 <View style={styles.container}>
                     <Text style={styles.text}>{"You didn't set up a goal yet."}</Text>
+                    <Pressable
+                        style={styles.button}
+                        onPress={setNewGoal}
+                    >
+                        <Text style={styles.text}>Set new goal</Text>
+                    </Pressable>
                 </View>
             </>
         )
