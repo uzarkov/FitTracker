@@ -1,8 +1,8 @@
-import { UPDATE_DAILY_PROGRESS_ACTION_PREFIX } from "../constants";
-import { getDailyProgressPlaceholder } from "../utils";
-import { updateDailyProgressReducer } from "./updateDailyProgress";
+import { SET_DAILY_PROGRESS_ACTION_PREFIX } from "../constants"
+import { getDailyProgressPlaceholder } from "../utils"
+import { setDailyProgressReducer } from "./setDailyProgress"
 
-describe('updateDailyProgressReducer', () => {
+describe('setDailyProgressReducer', () => {
     const sampleState = {
         days: {},
         fetching: false,
@@ -26,27 +26,23 @@ describe('updateDailyProgressReducer', () => {
         }
 
         const action = {
-            type: `${UPDATE_DAILY_PROGRESS_ACTION_PREFIX}-request`,
+            type: `${SET_DAILY_PROGRESS_ACTION_PREFIX}-request`,
             payload: {
-                date: "01-11-2021",
-                updatedFields: {
-                    totalKcal: 9999
-                }
+                ...getDailyProgressPlaceholder("01-11-2021", 0),
+                targetKcal: 3000,
+                totalKcal: 1500,
             }
         }
 
         sampleOriginalDailyProgressWrapper.set(undefined);
 
         // when
-        const newState = updateDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
+        const newState = setDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
 
         // then
         expect(newState).toStrictEqual({
             days: {
-                "01-11-2021": {
-                    ...startingState.days["01-11-2021"],
-                    totalKcal: 9999
-                },
+                "01-11-2021": action.payload,
             },
             fetching: false,
             error: null,
@@ -62,17 +58,18 @@ describe('updateDailyProgressReducer', () => {
                 ...sampleState.days,
                 "01-11-2021": {
                     ...getDailyProgressPlaceholder("01-11-2021", 0),
-                    totalKcal: 9999
+                    targetKcal: 3000,
+                    totalKcal: 1500,
                 }
             }
         }
 
-        const action = { type: `${UPDATE_DAILY_PROGRESS_ACTION_PREFIX}-success` }
+        const action = { type: `${SET_DAILY_PROGRESS_ACTION_PREFIX}-success` }
 
         sampleOriginalDailyProgressWrapper.set(startingState.days["01-11-2021"]);
 
         // when
-        const newState = updateDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
+        const newState = setDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
 
         // then
         expect(newState).toStrictEqual(startingState)
@@ -87,18 +84,18 @@ describe('updateDailyProgressReducer', () => {
                 ...sampleState.days,
                 "01-11-2021": {
                     ...getDailyProgressPlaceholder("01-11-2021", 0),
-                    totalKcal: 9999
+                    targetKcal: 3000,
+                    totalKcal: 1500,
                 }
             }
         }
 
         const action = {
-            type: `${UPDATE_DAILY_PROGRESS_ACTION_PREFIX}-failure`,
+            type: `${SET_DAILY_PROGRESS_ACTION_PREFIX}-failure`,
             payload: {
-                date: "01-11-2021",
-                updatedFields: {
-                    totalKcal: 9999
-                }
+                ...getDailyProgressPlaceholder("01-11-2021", 0),
+                targetKcal: 3000,
+                totalKcal: 1500,
             }
         }
 
@@ -106,7 +103,7 @@ describe('updateDailyProgressReducer', () => {
         sampleOriginalDailyProgressWrapper.set(originalDailyProgress);
 
         // when
-        const newState = updateDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
+        const newState = setDailyProgressReducer(startingState, action, sampleOriginalDailyProgressWrapper)
 
         // then
         expect(newState).toStrictEqual({
