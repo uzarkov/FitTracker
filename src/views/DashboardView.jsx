@@ -2,7 +2,7 @@ import moment from 'moment';
 import React, { useEffect } from 'react';
 import { Dimensions, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useState } from 'react/cjs/react.development';
-import { TopBar } from '../components/TopBar';
+import { TopBar } from '../components/TopBar/TopBar';
 import { addActivity, removeActivity } from '../contexts/activity-context/actions';
 import { signOut } from '../contexts/auth-context/actions/signOut';
 import { useAuth } from '../contexts/auth-context/authContext';

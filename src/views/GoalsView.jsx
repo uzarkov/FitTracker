@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { TopBar } from '../components/TopBar';
+import { TopBar } from '../components/TopBar/TopBar';
 import { useAuth } from '../contexts/auth-context/authContext';
 import { fetchCurrentGoal } from '../contexts/goal-context/actions/fetchCurrentGoal';
 import { setGoal } from '../contexts/goal-context/actions/setGoal';

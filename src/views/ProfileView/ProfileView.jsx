@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Text, View } from "react-native";
 import { styles } from "./ProfileViewStyles";
-import { TopBar } from '../../components/TopBar';
+import { TopBar } from '../../components/TopBar/TopBar';
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { fetchUserProfile } from '../../contexts/user-profile-context/actions/fetchUserProfile';
 import { useUserProfile } from '../../contexts/user-profile-context/userProfileContext';
