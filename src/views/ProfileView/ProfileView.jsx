@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { Text, View } from "react-native";
-import {styles} from "./ProfileViewStyles";
+import { styles } from "./ProfileViewStyles";
 import { TopBar } from '../../components/TopBar';
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { fetchUserProfile } from '../../contexts/user-profile-context/actions/fetchUserProfile';
 import { useUserProfile } from '../../contexts/user-profile-context/userProfileContext';
-import {CircProgress} from "../../components/common/circ-progress/CircProgress";
+import { CircProgress } from "../../components/common/circ-progress/CircProgress";
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {InfoLabel} from "../../components/common/info-label/InfoLabel";
+import { InfoLabel } from "../../components/common/info-label/InfoLabel";
 
 export const ProfileView = () => {
 
@@ -40,10 +40,9 @@ export const ProfileView = () => {
                             {userProfile.name}
                         </Text>
                     </View>
-                    {/*TODO: fetch info about email*/}
                     <InfoLabel
                         text={EMAIL_ADDRESS}
-                        value={"jank.kowalski@gmail.com"}
+                        value={user.email}
                     />
                     <InfoLabel
                         text={BIRTHDATE}
