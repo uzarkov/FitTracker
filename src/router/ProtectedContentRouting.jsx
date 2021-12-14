@@ -6,7 +6,7 @@ import { UserProfileProvider } from '../contexts/user-profile-context/userProfil
 import { DashboardView } from '../views/DashboardView';
 import { GoalsView } from '../views/GoalsView';
 import { HistoryView } from '../views/HistoryView';
-import { NavigationView } from '../views/NavigationView';
+import { NavigationView } from '../views/NavigationView/NavigationView';
 import { ProfileView } from '../views/ProfileView/ProfileView';
 import { StatsView } from '../views/StatsView';
 
