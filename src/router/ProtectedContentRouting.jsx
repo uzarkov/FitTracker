@@ -4,7 +4,7 @@ import { DailyProgressProvider } from '../contexts/daily-progress-context/dailyP
 import { GoalProvider } from '../contexts/goal-context/goalContext';
 import { UserProfileProvider } from '../contexts/user-profile-context/userProfileContext';
 import { DashboardView } from '../views/DashboardView';
-import { GoalsView } from '../views/GoalsView';
+import { GoalsView } from '../views/GoalsView/GoalsView';
 import { HistoryView } from '../views/HistoryView';
 import { NavigationView } from '../views/NavigationView/NavigationView';
 import { ProfileView } from '../views/ProfileView/ProfileView';
