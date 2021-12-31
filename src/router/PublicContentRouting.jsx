@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-native';
-import { SignInView } from '../views/SignInView';
+import { SignInView } from '../views/SignInView/SignInView';
 import { SignUpView } from '../views/SignUpView';
 
 export const SIGN_IN_ROUTE = '/';
