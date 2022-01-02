@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, Pressable } from "react-native";
 import { TopBar } from '../../components/TopBar/TopBar';
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { fetchCurrentGoal } from '../../contexts/goal-context/actions/fetchCurrentGoal';
 import { useGoal } from '../../contexts/goal-context/goalContext';
-import {styles} from './GoalsViewStyles';
-import {InfoLabel} from "../../components/common/info-label/InfoLabel";
-import {CircProgress} from "../../components/common/circ-progress/CircProgress";
-import {Link} from "react-router-native";
-import {HISTORY_ROUTE} from '../../router/ProtectedContentRouting';
-import {GoalsModal} from "./GoalsModal/GoalsModal";
+import { styles } from './GoalsViewStyles';
+import { InfoLabel } from "../../components/common/info-label/InfoLabel";
+import { CircProgress } from "../../components/common/circ-progress/CircProgress";
+import { Link } from "react-router-native";
+import { HISTORY_ROUTE } from '../../router/ProtectedContentRouting';
+import { GoalsModal } from "./GoalsModal/GoalsModal";
+import { useBodyMeasurements } from '../../contexts/body-measurements-context/bodyMeasurementsContext';
+import { fetchLatestBodyMeasurement } from '../../contexts/body-measurements-context/actions/fetchLatestBodyMeasurement';
+import { calculateGoalProgress } from '../../contexts/goal-context/utils';
 
 export const GoalsView = () => {
     const [userState] = useAuth();
@@ -18,25 +21,24 @@ export const GoalsView = () => {
     const [goalsState, goalsDispatch] = useGoal();
     const { activeGoal, fetching } = goalsState;
 
+    const [bodyMeasurementsState, measurementsDispatch] = useBodyMeasurements();
+    const { latestBodyMeasurement } = bodyMeasurementsState
+
     const [modalVisible, isModalVisible] = useState(false);
 
     useEffect(() => {
+        fetchLatestBodyMeasurement(measurementsDispatch, { uid: user.uid })
         fetchCurrentGoal(goalsDispatch, { uid: user.uid })
     }, [])
 
-    //TODO: remove this if context support is provided
-    const getRandomIntIncl = (min, max) => {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
+    const currentWeight = latestBodyMeasurement?.weight || activeGoal.startingWeight
 
     return (
         <>
             <TopBar />
             <View style={styles.container}>
                 <View style={styles.box}>
-                    {!(activeGoal && activeGoal.isPlaceholder) ?
+                    {!(activeGoal && activeGoal.isUndefined) ?
                         <>
                             <InfoLabel
                                 text={"Aktualny cel"}
@@ -53,8 +55,7 @@ export const GoalsView = () => {
                                 />
                                 <InfoLabel
                                     text={"Aktualnie"}
-                                    //TODO: fetch this val using context
-                                    value={`${getRandomIntIncl(activeGoal.startingWeight, activeGoal.targetWeight)}kg`}
+                                    value={`${currentWeight}kg`}
                                 />
                                 <InfoLabel
                                     text={"Cel"}
@@ -62,8 +63,7 @@ export const GoalsView = () => {
                                 />
                             </View>
                             <CircProgress
-                                //TODO: calculate this value if context is provided
-                                value={50}
+                                value={calculateGoalProgress(activeGoal, currentWeight)}
                                 radius={65}
                             />
                             <View>
@@ -97,6 +97,7 @@ export const GoalsView = () => {
                 <GoalsModal
                     modalVisible={modalVisible}
                     isModalVisible={isModalVisible}
+                    latestBodyMeasurement={latestBodyMeasurement}
                 />
             </View>
         </>

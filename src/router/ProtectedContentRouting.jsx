@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-native';
+import { BodyMeasurementsProvider } from '../contexts/body-measurements-context/bodyMeasurementsContext';
 import { DailyProgressProvider } from '../contexts/daily-progress-context/dailyProgressContext';
 import { GoalProvider } from '../contexts/goal-context/goalContext';
 import { UserProfileProvider } from '../contexts/user-profile-context/userProfileContext';
@@ -23,12 +24,14 @@ export const ProtectedContentRouting = () => {
       <DailyProgressProvider>
         <UserProfileProvider>
           <GoalProvider>
-            <Route exact path={DASHBOARD_ROUTE} component={DashboardView} />
-            <Route exact path={NAVIGATION_ROUTE} component={NavigationView} />
-            <Route exact path={PROFILE_ROUTE} component={ProfileView} />
-            <Route exact path={GOALS_ROUTE} component={GoalsView} />
-            <Route exact path={STATS_ROUTE} component={StatsView} />
-            <Route exact path={HISTORY_ROUTE} component={HistoryView} />
+            <BodyMeasurementsProvider>
+              <Route exact path={DASHBOARD_ROUTE} component={DashboardView} />
+              <Route exact path={NAVIGATION_ROUTE} component={NavigationView} />
+              <Route exact path={PROFILE_ROUTE} component={ProfileView} />
+              <Route exact path={GOALS_ROUTE} component={GoalsView} />
+              <Route exact path={STATS_ROUTE} component={StatsView} />
+              <Route exact path={HISTORY_ROUTE} component={HistoryView} />
+            </BodyMeasurementsProvider>
           </GoalProvider>
         </UserProfileProvider>
       </DailyProgressProvider>

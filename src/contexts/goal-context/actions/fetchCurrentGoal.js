@@ -10,7 +10,7 @@ export const fetchCurrentGoal = (dispatch, { uid }) => {
 
     getDocs(q)
         .then(querySnap => {
-            const currentGoal = (querySnap.size > 0 && querySnap.docs[0].data()) || { isPlaceholder: true }
+            const currentGoal = (querySnap.size > 0 && querySnap.docs[0].data()) || { isUndefined: true }
             dispatch({ type: `${FETCH_CURRENT_GOAL_ACTION_PREFIX}-success`, payload: currentGoal })
         })
         .catch(error => {
