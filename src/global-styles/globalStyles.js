@@ -62,4 +62,9 @@ export const globalStyles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold'
     },
+    longList: {
+        marginLeft: 8,
+        height: '80%'
+    }
+
 })

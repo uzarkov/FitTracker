@@ -35,7 +35,7 @@ export const SignUpForm = (props) => {
                     />
                     <TextInput
                         style={[globalStyles.inputAndroid, styles.input]}
-                        placeholder={"Data urodzenia (dd.mm.yyyy)"}
+                        placeholder={"Data urodzenia (dd-mm-yyyy)"}
                         placeholderTextColor={'grey'}
                         keyboardType={"numeric"}
                         onChangeText={formikProps.handleChange('birthDate')}
