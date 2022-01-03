@@ -17,9 +17,17 @@ export const countTotalsOf = (dailyProgress) => {
     const burnedKcal = dailyProgress.activities.reduce((acc, v) => acc + v.burnedKcal, 0)
 
     return {
+        productsKcal: productsKcal,
+        burnedKcal: burnedKcal,
         totalKcal: productsKcal - burnedKcal,
         totalCarbs: dailyProgress.products.reduce((acc, v) => acc + v.carbs, 0),
         totalProteins: dailyProgress.products.reduce((acc, v) => acc + v.proteins, 0),
         totalFats: dailyProgress.products.reduce((acc, v) => acc + v.fats, 0),
     }
+}
+
+export const countRemainingKcal = (totalKcal, targetKcal) => {
+    const remainingKcal = targetKcal - totalKcal;
+
+    return remainingKcal >= 0 ? remainingKcal : 0;
 }

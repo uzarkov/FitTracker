@@ -18,5 +18,5 @@ export const InfoLabel = (props) => {
 
 InfoLabel.propTypes = {
     text: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired
+    value: PropTypes.any.isRequired
 }

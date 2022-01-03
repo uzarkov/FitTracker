@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {Keyboard, Pressable, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { signIn } from '../../contexts/auth-context/actions/signIn';
-import { DashboardView} from "../DashboardView";
+import { DashboardView} from "../DashboardView/DashboardView";
 import { Link } from 'react-router-native';
 import { SIGN_UP_ROUTE } from '../../router/PublicContentRouting';
 import {styles} from './SignInViewStyles';
