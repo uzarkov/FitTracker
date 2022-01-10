@@ -6,8 +6,8 @@ import { Link } from "react-router-native";
 import { styles } from "./GoalsModalStyles";
 import { globalStyles } from "../../../global-styles/globalStyles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { DASHBOARD_ROUTE } from "../../../router/ProtectedContentRouting";
 import { GoalsForm } from "../GoalsForm/GoalsForm";
+import { PROTECTED_ROUTES } from "../../../router/constants";
 
 export const GoalsModal = (props) => {
     const isMeasurementProvided = props.latestBodyMeasurement !== undefined;
@@ -47,7 +47,7 @@ export const GoalsModal = (props) => {
                             <Text style={styles.info}>
                                 Cel można ustalić dopiero po dodaniu pomiaru ciała
                             </Text>
-                            <Link to={DASHBOARD_ROUTE}>
+                            <Link to={PROTECTED_ROUTES.DASHBOARD_ROUTE}>
                                 <Text style={styles.link}>Dodaj pomiar</Text>
                             </Link>
                         </View>

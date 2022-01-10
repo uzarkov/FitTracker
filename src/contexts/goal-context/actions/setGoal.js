@@ -1,9 +1,19 @@
 import { collection, addDoc, updateDoc, where, doc, getDocs, query } from "@firebase/firestore";
 import { Firestore } from "../../../firebase/config";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 import { SET_GOAL_ACTION_PREFIX } from "../constants"
+import { validateSetGoal } from "../utils/setGoalValidation";
 
 export const setGoal = (dispatch, { uid, goal }) => {
     dispatch({ type: `${SET_GOAL_ACTION_PREFIX}-request` })
+
+    try {
+        validateSetGoal({ ...goal })
+    } catch (error) {
+        dispatch({ type: `${SET_GOAL_ACTION_PREFIX}-failure` })
+        showErrorToast(error.message)
+        return;
+    }
 
     const collectionRef = collection(Firestore, 'users', uid, 'goals');
     const q = query(collectionRef, where('active', '==', true));
@@ -32,10 +42,12 @@ const onSuccess = (dispatch, newGoal) => {
         type: `${SET_GOAL_ACTION_PREFIX}-success`,
         payload: newGoal
     })
+    showSuccessToast("Dodano nowy cel")
 }
 
 const onFailure = (dispatch) => {
     dispatch({ type: `${SET_GOAL_ACTION_PREFIX}-failure` })
+    showErrorToast("Nie udało się dodać celu")
 }
 
 export const setGoalReducer = (state, action) => {

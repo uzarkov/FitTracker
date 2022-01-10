@@ -1,18 +1,20 @@
 import React from 'react';
-import {View, Pressable, Text, TextInput} from "react-native";
+import { View, Pressable, Text, TextInput } from "react-native";
 import { Formik } from 'formik';
-import {styles} from "./FoodFormStyles";
-import {globalStyles} from "../../../../global-styles/globalStyles";
+import { styles } from "./FoodFormStyles";
+import { globalStyles } from "../../../../global-styles/globalStyles";
 import PropTypes from "prop-types";
 import moment from 'moment';
-import {useAuth} from "../../../../contexts/auth-context/authContext";
-import {addProduct} from "../../../../contexts/product-context/actions";
-import {useDailyProgress} from "../../../../contexts/daily-progress-context/dailyProgressContext";
-import {getDailyProgressPlaceholder} from "../../../../contexts/daily-progress-context/utils";
+import { useAuth } from "../../../../contexts/auth-context/authContext";
+import { addProduct } from "../../../../contexts/product-context/actions";
+import { useDailyProgress } from "../../../../contexts/daily-progress-context/dailyProgressContext";
+import { getDailyProgressPlaceholder } from "../../../../contexts/daily-progress-context/utils";
+import { validateProduct } from '../../../../contexts/product-context/utils/productAddValidation';
+import { showErrorToast } from '../../../../utils/toasts';
 
 export const FoodForm = (props) => {
 
-    const [authState, ] = useAuth();
+    const [authState,] = useAuth();
     const { user } = authState;
 
     const [dailyProgressState, dailyProgressDispatch] = useDailyProgress();
@@ -22,17 +24,24 @@ export const FoodForm = (props) => {
     const dailyProgress = days[today] || getDailyProgressPlaceholder(today, 0);
 
     const addDailyProgressProduct = (values) => {
-        addProduct(dailyProgressDispatch, {
-            uid: user.uid,
-            dailyProgress,
-            newProduct: {
-                name: values.name,
-                kcal: Number(values.kcal),
-                proteins: Number(values.proteins),
-                carbs: Number(values.carbs),
-                fats: Number(values.fats)
-            }
-        })
+        const product = {
+            name: values.name,
+            kcal: parseFloat(values.kcal) || 0,
+            proteins: parseFloat(values.proteins) || 0,
+            carbs: parseFloat(values.carbs) || 0,
+            fats: parseFloat(values.fats) || 0,
+        }
+
+        try {
+            validateProduct({ ...product })
+            addProduct(dailyProgressDispatch, {
+                uid: user.uid,
+                dailyProgress,
+                newProduct: product,
+            })
+        } catch (error) {
+            showErrorToast(error.message)
+        }
     }
 
     const initialValues = {

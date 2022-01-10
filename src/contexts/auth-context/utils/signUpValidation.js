@@ -1,40 +1,51 @@
 import moment from 'moment';
 
-export const validateSignUp = (password, passwordConfirmation, name, birthDate) => {
+export const validateSignUp = (password, email, passwordConfirmation, name, birthDate) => {
     validateName(name);
     validatePassword(password, passwordConfirmation);
+    validateEmail(email)
     validateBirthDate(birthDate);
 }
 
 const validateName = (name) => {
     if (name.length < 5) {
-        throw new Error("Name has to be at least 5 characters long")
+        throw new Error("Nazwa musi się składać z conajmniej 5 znaków")
     }
 }
 
 const validatePassword = (password, passwordConfirmation) => {
     if (password.length < 8) {
-        throw new Error("Password has to be at least 8 characters long")
+        throw new Error("Hasło musi się składać z conajmniej 8 znaków")
     }
 
     if (password.search(/[a-z]+/) == -1 || password.search(/[A-Z]+/) == -1 || password.search(/[0-9]/) == -1) {
-        throw new Error("Password has to contain at least one uppercase letter, one lowercase letter and one digit")
+        throw new Error("Hasło musi zawierać conajmniej jedną dużą i małą literę oraz cyfrę")
     }
 
     if (password.search(/[~`!@#$%^&*()_\-+={[}\]\|\:;"'<,>\.?/]+/) == -1) {
-        throw new Error("Password has to contain at least one special character (~`! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/)")
+        throw new Error("Hasło musi zawierać conajmniej jeden znak specjalny (~`! @#$%^&*()_-+={[}]|\\:;\"'<,>.?/)")
     }
 
     if (passwordConfirmation !== password) {
-        throw new Error("Given passwords do not match")
+        throw new Error("Podane hasła różnią się od siebie")
+    }
+}
+
+const validateEmail = (email) => {
+    if (email.length == 0) {
+        throw new Error("Email nie może być pusty")
     }
 }
 
 const validateBirthDate = (birthDate) => {
+    if (birthDate.length == 0) {
+        throw new Error("Data urodzenia nie może być pusta")
+    }
+
     const date = moment(birthDate, "DD-MM-YYYY");
     const today = moment();
 
     if (date.isAfter(today)) {
-        throw new Error("Birth date has to be a day in the past")
+        throw new Error("Data urodzenia musi być datą przeszłą")
     }
 }

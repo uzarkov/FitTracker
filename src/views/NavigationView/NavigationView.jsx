@@ -1,17 +1,16 @@
 import React from 'react';
 import { Text, View } from "react-native";
 import { Link } from 'react-router-native';
-import { DASHBOARD_ROUTE, GOALS_ROUTE, HISTORY_ROUTE, PROFILE_ROUTE, STATS_ROUTE } from '../../router/ProtectedContentRouting';
-import {styles} from './NavigationViewStyles';
+import { PROTECTED_ROUTES } from '../../router/constants';
+import { styles } from './NavigationViewStyles';
 
 export const NavigationView = () => {
 
     const links = [
-        {name: 'Strona główna', link: DASHBOARD_ROUTE},
-        {name: 'Profil', link: PROFILE_ROUTE},
-        {name: 'Cele', link: GOALS_ROUTE},
-        {name: 'Statystyki', link: STATS_ROUTE},
-        {name: 'Historia', link: HISTORY_ROUTE}
+        { name: 'Strona główna', link: PROTECTED_ROUTES.DASHBOARD_ROUTE },
+        { name: 'Profil', link: PROTECTED_ROUTES.PROFILE_ROUTE },
+        { name: 'Cele', link: PROTECTED_ROUTES.GOALS_ROUTE },
+        { name: 'Historia', link: PROTECTED_ROUTES.HISTORY_ROUTE }
     ];
 
     return (
@@ -19,9 +18,9 @@ export const NavigationView = () => {
             <View style={styles.list}>
                 {links.map((link, i) => {
                     return (
-                      <Link to={link.link} key={i}>
-                          <Text style={styles.text}>{link.name}</Text>
-                      </Link>
+                        <Link to={link.link} key={i}>
+                            <Text style={styles.text}>{link.name}</Text>
+                        </Link>
                     );
                 })}
             </View>

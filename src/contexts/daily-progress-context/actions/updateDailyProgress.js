@@ -3,6 +3,7 @@ import { Firestore } from "../../../firebase/config";
 import { UPDATE_DAILY_PROGRESS_ACTION_PREFIX } from "../constants";
 import assert from 'assert';
 import { setDailyProgress } from "./setDailyProgress";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 
 export const updateDailyProgress = (dispatch, { uid, dailyProgress, updatedFields }) => {
     if (dailyProgress.isPlaceholder) {
@@ -35,6 +36,7 @@ const update = (dispatch, { uid, date, updatedFields }) => {
 
 const onSuccess = (dispatch) => {
     dispatch({ type: `${UPDATE_DAILY_PROGRESS_ACTION_PREFIX}-success` })
+    showSuccessToast("Pomyślnie zaktualizowano postęp")
 }
 
 const onFailure = (dispatch, date, updatedFields) => {
@@ -45,6 +47,7 @@ const onFailure = (dispatch, date, updatedFields) => {
             updatedFields,
         },
     })
+    showErrorToast("Aktualizacja postępu nieudana")
 }
 
 let originalDailyProgress = undefined;

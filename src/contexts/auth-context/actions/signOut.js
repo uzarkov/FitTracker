@@ -1,5 +1,6 @@
 import { getAuth, signOut as signUserOut } from 'firebase/auth';
 import { FirebaseApp } from '../../../firebase/config';
+import { showErrorToast, showSuccessToast } from '../../../utils/toasts';
 import { USER_SIGN_OUT_ACTION_PREFIX } from '../constants';
 
 export const signOut = (dispatch) => {
@@ -10,9 +11,11 @@ export const signOut = (dispatch) => {
     signUserOut(auth)
         .then(() => {
             dispatch({ type: `${USER_SIGN_OUT_ACTION_PREFIX}-success` })
+            showSuccessToast("Wylogowano pomyślnie")
         })
         .catch((error) => {
             dispatch({ type: `${USER_SIGN_OUT_ACTION_PREFIX}-failure`, error: error })
+            showErrorToast(error.message)
         });
 }
 

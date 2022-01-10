@@ -1,18 +1,20 @@
 import React from 'react';
-import {View, Pressable, Text, TextInput} from "react-native";
+import { View, Pressable, Text, TextInput } from "react-native";
 import { Formik } from 'formik';
-import {styles} from "./ActivityFormStyles";
-import {globalStyles} from "../../../../global-styles/globalStyles";
+import { styles } from "./ActivityFormStyles";
+import { globalStyles } from "../../../../global-styles/globalStyles";
 import PropTypes from "prop-types";
 import moment from 'moment';
-import {useAuth} from "../../../../contexts/auth-context/authContext";
-import {useDailyProgress} from "../../../../contexts/daily-progress-context/dailyProgressContext";
-import {getDailyProgressPlaceholder} from "../../../../contexts/daily-progress-context/utils";
-import {addActivity} from "../../../../contexts/activity-context/actions";
+import { useAuth } from "../../../../contexts/auth-context/authContext";
+import { useDailyProgress } from "../../../../contexts/daily-progress-context/dailyProgressContext";
+import { getDailyProgressPlaceholder } from "../../../../contexts/daily-progress-context/utils";
+import { addActivity } from "../../../../contexts/activity-context/actions";
+import { validateActivity } from '../../../../contexts/activity-context/utils/activityAddValidation';
+import { showErrorToast } from '../../../../utils/toasts';
 
 export const ActivityForm = (props) => {
 
-    const [authState, ] = useAuth();
+    const [authState,] = useAuth();
     const { user } = authState;
 
     const [dailyProgressState, dailyProgressDispatch] = useDailyProgress();
@@ -22,14 +24,21 @@ export const ActivityForm = (props) => {
     const dailyProgress = days[today] || getDailyProgressPlaceholder(today, 0);
 
     const addDailyProgressActivity = (values) => {
-        addActivity(dailyProgressDispatch, {
-            uid: user.uid,
-            dailyProgress,
-            newActivity: {
-                name: values.name,
-                burnedKcal: Number(values.burnedKcal)
-            }
-        })
+        const activity = {
+            name: values.name,
+            burnedKcal: parseFloat(values.burnedKcal) || 0,
+        }
+
+        try {
+            validateActivity({ ...activity })
+            addActivity(dailyProgressDispatch, {
+                uid: user.uid,
+                dailyProgress,
+                newActivity: activity
+            })
+        } catch (error) {
+            showErrorToast(error.message)
+        }
     }
 
     const initialValues = {
@@ -57,7 +66,7 @@ export const ActivityForm = (props) => {
                         />
                         <TextInput
                             style={[globalStyles.inputAndroid, styles.input]}
-                            placeholder={"Spalone Kcal"}
+                            placeholder={"Spalone kalorie"}
                             placeholderTextColor={'grey'}
                             keyboardType={"numeric"}
                             onChangeText={formikProps.handleChange('burnedKcal')}

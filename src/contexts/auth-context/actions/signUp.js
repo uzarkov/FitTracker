@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword, getAuth } from "@firebase/auth";
 import { FirebaseApp } from "../../../firebase/config";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 import { updateUserProfile } from "../../user-profile-context/actions/updateUserProfile";
 import { USER_SIGN_UP_ACTION_PREFIX } from "../constants";
 import { validateSignUp } from "../utils/signUpValidation";
@@ -8,9 +9,10 @@ export const signUp = (authDispatch, userProfileDispatch, { email, password, pas
     authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-request` });
 
     try {
-        validateSignUp(password, passwordConfirmation, name, birthDate);
+        validateSignUp(password, email, passwordConfirmation, name, birthDate);
     } catch (error) {
         authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`, error: error });
+        showErrorToast(error.message)
         return;
     }
 
@@ -21,9 +23,11 @@ export const signUp = (authDispatch, userProfileDispatch, { email, password, pas
             const uid = userCredentials.user.uid
             createUserProfile(userProfileDispatch, uid, name, birthDate)
             authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-success` })
+            showSuccessToast("Konto utworzone pomyślnie")
         })
         .catch((error) => {
             authDispatch({ type: `${USER_SIGN_UP_ACTION_PREFIX}-failure`, error: error })
+            showErrorToast(error.message)
         });
 }
 

@@ -1,7 +1,9 @@
 import { doc, setDoc, Timestamp } from "@firebase/firestore";
 import moment from "moment";
 import { Firestore } from "../../../firebase/config";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 import { ADD_BODY_MEASUREMENT_ACTION_PREFIX } from "../constants";
+import { validateBodyMeasurement } from "../utils/bodyMeasurementValidation";
 
 export const FAILURE_ERROR_MSG = "Could not add body measurement"
 
@@ -14,6 +16,14 @@ export const addBodyMeasurement = (dispatch, { uid, date, bodyMeasurement }) => 
 
     dispatch({ type: `${ADD_BODY_MEASUREMENT_ACTION_PREFIX}-request` });
 
+    try {
+        validateBodyMeasurement({ ...bodyMeasurement });
+    } catch (error) {
+        dispatch({ type: `${ADD_BODY_MEASUREMENT_ACTION_PREFIX}-failure` })
+        showErrorToast(error.message)
+        return
+    }
+
     const docRef = doc(Firestore, 'users', uid, 'body-measurements', date);
 
     setDoc(docRef, addedBodyMeasurement)
@@ -25,10 +35,12 @@ const onSuccess = (dispatch, addedBodyMeasurement) => {
         type: `${ADD_BODY_MEASUREMENT_ACTION_PREFIX}-success`,
         payload: addedBodyMeasurement
     })
+    showSuccessToast("Dodano pomiar")
 }
 
 const onFailure = (dispatch) => {
     dispatch({ type: `${ADD_BODY_MEASUREMENT_ACTION_PREFIX}-failure` })
+    showErrorToast("Nie udało się dodać pomiaru")
 }
 
 export const addBodyMeasurementReducer = (state, action) => {
