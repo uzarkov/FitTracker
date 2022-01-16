@@ -6,7 +6,7 @@ import { GoalProvider } from '../contexts/goal-context/goalContext';
 import { UserProfileProvider } from '../contexts/user-profile-context/userProfileContext';
 import { DashboardView } from '../views/DashboardView/DashboardView';
 import { GoalsView } from '../views/GoalsView/GoalsView';
-import { HistoryView } from '../views/HistoryView';
+import { HistoryView } from '../views/HistoryView/HistoryView';
 import { NavigationView } from '../views/NavigationView/NavigationView';
 import { ProfileView } from '../views/ProfileView/ProfileView';
 import { PROTECTED_ROUTES } from './constants';
