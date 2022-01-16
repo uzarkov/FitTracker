@@ -27,14 +27,16 @@ export const fetchBodyMeasurementReducer = (state, action) => {
         case `${FETCH_BODY_MEASUREMENT_ACTION_PREFIX}-success`: {
             if (action.payload) {
                 const bodyMeasurement = action.payload;
-                const { dateAsString } = bodyMeasurement;
+                if (bodyMeasurement === undefined) {
+                    return { ...state }
+                }
 
                 return {
                     ...state,
                     fetching: false,
                     bodyMeasurements: {
                         ...state.bodyMeasurements,
-                        [`${dateAsString}`]: bodyMeasurement,
+                        [`${bodyMeasurement.dateAsString}`]: bodyMeasurement,
                     }
                 }
             }

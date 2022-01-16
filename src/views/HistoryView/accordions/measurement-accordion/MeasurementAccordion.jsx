@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import { View, FlatList,} from "react-native";
-import {Accordion} from "../../../../components/common/accordion/Accordion";
-import {ListItem} from "../../../../components/common/list-item/ListItem";
-import {globalStyles} from "../../../../global-styles/globalStyles";
+import { View, FlatList, } from "react-native";
+import { Accordion } from "../../../../components/common/accordion/Accordion";
+import { ListItem } from "../../../../components/common/list-item/ListItem";
+import { globalStyles } from "../../../../global-styles/globalStyles";
 
 export const MeasurementAccordion = (props) => {
 
@@ -15,9 +15,9 @@ export const MeasurementAccordion = (props) => {
                     <FlatList
                         data={props.data}
                         keyExtractor={(item, index) => index}
-                        renderItem={({item}) => (
+                        renderItem={({ item }) => (
                             <ListItem
-                                title={item.name}
+                                title={`#1`}
                                 description={
                                     `Waga: ${item.weight}kg, Wzrost: ${item.height}cm, TT: ${item.bodyFat}%`
                                 }

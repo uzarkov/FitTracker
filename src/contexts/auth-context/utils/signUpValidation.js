@@ -1,10 +1,10 @@
 import moment from 'moment';
 
 export const validateSignUp = (password, email, passwordConfirmation, name, birthDate) => {
+    validateBirthDate(birthDate);
     validateName(name);
     validatePassword(password, passwordConfirmation);
     validateEmail(email)
-    validateBirthDate(birthDate);
 }
 
 const validateName = (name) => {
@@ -40,6 +40,10 @@ const validateEmail = (email) => {
 const validateBirthDate = (birthDate) => {
     if (birthDate.length == 0) {
         throw new Error("Data urodzenia nie może być pusta")
+    }
+
+    if (birthDate.search(/[0-9]{2}-[0-9]{2}-[0-9]{4}/) == -1) {
+        throw new Error("Data urodzenia została wprowadzona w nieprawidłowym formacie")
     }
 
     const date = moment(birthDate, "DD-MM-YYYY");
