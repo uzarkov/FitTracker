@@ -65,6 +65,10 @@ export const globalStyles = StyleSheet.create({
     longList: {
         marginLeft: 8,
         height: '80%'
+    },
+    accordionList: {
+        marginLeft: 8,
+        minHeight: 30,
+        maxHeight: 170
     }
-
 })

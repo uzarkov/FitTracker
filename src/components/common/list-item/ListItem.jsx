@@ -22,7 +22,7 @@ export const ListItem = (props) => {
             >
                 <MaterialIcons
                     name={"delete"}
-                    color={"#CF6679"}
+                    color={props.withAction ? "#CF6679" : "transparent"}
                     size={30}
                 />
             </Pressable>
@@ -33,5 +33,11 @@ export const ListItem = (props) => {
 ListItem.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func,
+    withAction: PropTypes.bool
+}
+
+ListItem.defaultProps = {
+    onDelete: () => {},
+    withAction: true
 }

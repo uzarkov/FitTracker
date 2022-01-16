@@ -10,7 +10,7 @@ export const NavigationView = () => {
         {name: 'Strona główna', link: DASHBOARD_ROUTE},
         {name: 'Profil', link: PROFILE_ROUTE},
         {name: 'Cele', link: GOALS_ROUTE},
-        {name: 'Statystyki', link: STATS_ROUTE},
+        // {name: 'Statystyki', link: STATS_ROUTE},
         {name: 'Historia', link: HISTORY_ROUTE}
     ];
 
