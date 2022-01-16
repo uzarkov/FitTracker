@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Pressable, Text, TextInput} from "react-native";
+import { View, Pressable, Text, TextInput } from "react-native";
 import { Formik } from 'formik';
-import {styles} from "./SignUpFormStyles";
-import {globalStyles} from "../../../global-styles/globalStyles";
+import { styles } from "./SignUpFormStyles";
+import { globalStyles } from "../../../global-styles/globalStyles";
 import PropTypes from "prop-types";
-import {SIGN_IN_ROUTE} from "../../../router/PublicContentRouting";
-import {Link} from "react-router-native";
+import { Link } from "react-router-native";
+import { PUBLIC_ROUTES } from '../../../router/constants';
 
 export const SignUpForm = (props) => {
 
@@ -28,14 +28,14 @@ export const SignUpForm = (props) => {
                 <View style={styles.container}>
                     <TextInput
                         style={[globalStyles.inputAndroid, styles.input]}
-                        placeholder={"Imię i nazwisko"}
+                        placeholder={"Nazwa"}
                         placeholderTextColor={'grey'}
                         onChangeText={formikProps.handleChange('name')}
                         value={formikProps.values.name}
                     />
                     <TextInput
                         style={[globalStyles.inputAndroid, styles.input]}
-                        placeholder={"Data urodzenia (dd-mm-yyyy)"}
+                        placeholder={"Data urodzenia (DD-MM-YYYY)"}
                         placeholderTextColor={'grey'}
                         keyboardType={"numeric"}
                         onChangeText={formikProps.handleChange('birthDate')}
@@ -64,17 +64,17 @@ export const SignUpForm = (props) => {
                         onChangeText={formikProps.handleChange('passwordConfirmation')}
                         value={formikProps.values.passwordConfirmation}
                     />
-                        <Pressable
-                            style={[globalStyles.button, styles.button]}
-                            onPress={() => formikProps.handleSubmit()}
-                        >
-                            <Text style={styles.buttonText}>
-                                {props.fetching ? "..." : "Utwórz konto" }
-                            </Text>
-                        </Pressable>
-                        <Link to={SIGN_IN_ROUTE}>
-                            <Text style={styles.link}>LOGOWANIE</Text>
-                        </Link>
+                    <Pressable
+                        style={[globalStyles.button, styles.button]}
+                        onPress={() => formikProps.handleSubmit()}
+                    >
+                        <Text style={styles.buttonText}>
+                            {props.fetching ? "..." : "Utwórz konto"}
+                        </Text>
+                    </Pressable>
+                    <Link to={PUBLIC_ROUTES.SIGN_IN_ROUTE}>
+                        <Text style={styles.link}>LOGOWANIE</Text>
+                    </Link>
                 </View>
             )}
         </Formik>
@@ -82,6 +82,6 @@ export const SignUpForm = (props) => {
 }
 
 SignUpForm.propTypes = {
-    onSignUp: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
     fetching: PropTypes.bool.isRequired,
 }

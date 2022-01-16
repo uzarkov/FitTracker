@@ -1,5 +1,6 @@
 import { doc, deleteDoc } from "@firebase/firestore";
 import { Firestore } from "../../../firebase/config";
+import { showErrorToast, showSuccessToast } from "../../../utils/toasts";
 import { REMOVE_BODY_MEASUREMENT_ACTION_PREFIX } from "../constants";
 
 export const removeBodyMeasurement = (dispatch, { uid, date }) => {
@@ -8,16 +9,22 @@ export const removeBodyMeasurement = (dispatch, { uid, date }) => {
     const docRef = doc(Firestore, 'users', uid, 'body-measurements', date);
 
     deleteDoc(docRef)
-        .then(() => dispatch({
-            type: `${REMOVE_BODY_MEASUREMENT_ACTION_PREFIX}-success`,
-            payload: {
-                date: date
-            }
-        }))
-        .catch((error) => dispatch({
-            type: `${REMOVE_BODY_MEASUREMENT_ACTION_PREFIX}-failure`,
-            error: error
-        }))
+        .then(() => {
+            dispatch({
+                type: `${REMOVE_BODY_MEASUREMENT_ACTION_PREFIX}-success`,
+                payload: {
+                    date: date
+                }
+            })
+            showSuccessToast("Usunięto pomiar pomyślnie")
+        })
+        .catch((error) => {
+            dispatch({
+                type: `${REMOVE_BODY_MEASUREMENT_ACTION_PREFIX}-failure`,
+                error: error
+            })
+            showErrorToast("Nie udało się usunąć pomiaru")
+        })
 }
 
 export const removeBodyMeasurementReducer = (state, action) => {

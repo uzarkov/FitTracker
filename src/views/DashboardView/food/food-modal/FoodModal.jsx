@@ -1,10 +1,10 @@
 import React from "react";
-import {Text, Pressable, View,} from "react-native";
+import { Text, Pressable, View, } from "react-native";
 import PropTypes from 'prop-types';
 import Modal from "react-native-modal";
-import {globalStyles} from "../../../../global-styles/globalStyles";
+import { globalStyles } from "../../../../global-styles/globalStyles";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import {FoodForm} from "../food-form/FoodForm";
+import { FoodForm } from "../food-form/FoodForm";
 
 export const FoodModal = (props) => {
 
@@ -20,7 +20,7 @@ export const FoodModal = (props) => {
                 <View style={globalStyles.modal}>
                     <View style={globalStyles.modalTitleContainer}>
                         <MaterialIcons
-                            name={"straighten"}
+                            name={"fastfood"}
                             color={"#03DAC5"}
                             size={40}
                         />
@@ -36,7 +36,7 @@ export const FoodModal = (props) => {
                             />
                         </Pressable>
                     </View>
-                    <FoodForm isModalVisible={props.isModalVisible}/>
+                    <FoodForm isModalVisible={props.isModalVisible} />
                 </View>
             </View>
         </Modal>

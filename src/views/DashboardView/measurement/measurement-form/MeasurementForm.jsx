@@ -1,17 +1,17 @@
 import React from 'react';
-import {View, Pressable, Text, TextInput} from "react-native";
+import { View, Pressable, Text, TextInput } from "react-native";
 import { Formik } from 'formik';
-import {styles} from "./MeasurementFormStyles";
-import {globalStyles} from "../../../../global-styles/globalStyles";
+import { styles } from "./MeasurementFormStyles";
+import { globalStyles } from "../../../../global-styles/globalStyles";
 import PropTypes from "prop-types";
-import {addBodyMeasurement} from "../../../../contexts/body-measurements-context/actions/addBodyMeasurement";
-import {useAuth} from "../../../../contexts/auth-context/authContext";
-import {useBodyMeasurements} from "../../../../contexts/body-measurements-context/bodyMeasurementsContext";
+import { addBodyMeasurement } from "../../../../contexts/body-measurements-context/actions/addBodyMeasurement";
+import { useAuth } from "../../../../contexts/auth-context/authContext";
+import { useBodyMeasurements } from "../../../../contexts/body-measurements-context/bodyMeasurementsContext";
 import moment from "moment";
 
 export const MeasurementForm = (props) => {
 
-    const [authState, ] = useAuth();
+    const [authState,] = useAuth();
     const { user } = authState;
 
     const [bodyMeasurementsState, measurementsDispatch] = useBodyMeasurements();
@@ -21,9 +21,9 @@ export const MeasurementForm = (props) => {
             uid: user.uid,
             date: moment().format('DD-MM-YYYY'),
             bodyMeasurement: {
-                weight: Number(values.weight),
-                bodyFat: Number(values.bodyFat),
-                height: Number(values.height)
+                weight: parseFloat(values.weight) || 0,
+                bodyFat: parseFloat(values.bodyFat) || 0,
+                height: parseFloat(values.height) || 0
             }
         })
     }

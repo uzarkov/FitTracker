@@ -57,11 +57,11 @@ export const ProfileView = () => {
                     </View>
                     <InfoLabel
                         text={EMAIL_ADDRESS}
-                        value={user.email}
+                        value={user.email || ""}
                     />
                     <InfoLabel
                         text={BIRTHDATE}
-                        value={userProfile.birthDate}
+                        value={userProfile.birthDate || ""}
                     />
                     <View style={styles.group}>
                         <Text style={[styles.goal, styles.text]}>

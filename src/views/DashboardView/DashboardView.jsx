@@ -1,8 +1,8 @@
 import moment from 'moment';
 import React, { useEffect } from 'react';
-import { LogBox, View, Text, Pressable} from "react-native";
+import { LogBox, View, Text, Pressable } from "react-native";
 import { useState } from 'react/cjs/react.development';
-import { TopBar} from "../../components/TopBar/TopBar";
+import { TopBar } from "../../components/TopBar/TopBar";
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { fetchDailyProgress } from '../../contexts/daily-progress-context/actions/fetchDailyProgress';
 import { useDailyProgress } from '../../contexts/daily-progress-context/dailyProgressContext';
@@ -16,15 +16,15 @@ import { useGoal } from '../../contexts/goal-context/goalContext';
 import ActionButton from 'react-native-action-button';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import * as Progress from 'react-native-progress';
-import {styles} from './DashboardViewStyles';
-import {globalStyles} from "../../global-styles/globalStyles";
-import {InfoLabel} from "../../components/common/info-label/InfoLabel";
-import {CircularChart} from "../../components/common/pie-chart/CircularChart";
-import {ActivityModal} from "./activity/activity-modal/ActivityModal";
-import {FoodModal} from "./food/food-modal/FoodModal";
-import {MeasurementModal} from "./measurement/measurement-modal/MeasurementModal";
-import {ActivityInfoModal} from "./activity-info/ActivityInfoModal";
-import {FoodInfoModal} from "./food-info/FoodInfoModal";
+import { styles } from './DashboardViewStyles';
+import { globalStyles } from "../../global-styles/globalStyles";
+import { InfoLabel } from "../../components/common/info-label/InfoLabel";
+import { CircularChart } from "../../components/common/pie-chart/CircularChart";
+import { ActivityModal } from "./activity/activity-modal/ActivityModal";
+import { FoodModal } from "./food/food-modal/FoodModal";
+import { MeasurementModal } from "./measurement/measurement-modal/MeasurementModal";
+import { ActivityInfoModal } from "./activity-info/ActivityInfoModal";
+import { FoodInfoModal } from "./food-info/FoodInfoModal";
 
 export const DashboardView = () => {
 
@@ -75,11 +75,11 @@ export const DashboardView = () => {
     if (fetching || fetchingGoal) {
         return (
             <>
-                <TopBar/>
+                <TopBar />
                 <View style={styles.container}>
-                   <Text style={styles.loading}>
-                       ...
-                   </Text>
+                    <Text style={styles.loading}>
+                        ...
+                    </Text>
                 </View>
             </>
         )
@@ -87,7 +87,7 @@ export const DashboardView = () => {
 
     return (
         <>
-            <TopBar/>
+            <TopBar />
             <View style={styles.container}>
                 <View style={styles.boxes}>
                     <View style={[globalStyles.shadowBox, styles.balanceContainer]}>
@@ -126,11 +126,11 @@ export const DashboardView = () => {
                             value={dailyProgressTotals.productsKcal}
                         />
                         <View style={styles.chartContainer}>
-                            <CircularChart data={dailyProgressTotals}/>
+                            <CircularChart data={dailyProgressTotals} />
                         </View>
                         <Pressable
                             style={globalStyles.iconButton}
-                            onPress={() => {isFoodInfoModalVisible(true)}}
+                            onPress={() => { isFoodInfoModalVisible(true) }}
                         >
                             <Text style={styles.link}>
                                 SZCZEGÓŁY
@@ -144,7 +144,7 @@ export const DashboardView = () => {
                         />
                         <Pressable
                             style={globalStyles.iconButton}
-                            onPress={() => {isActivityInfoModalVisible(true)}}
+                            onPress={() => { isActivityInfoModalVisible(true) }}
                         >
                             <Text style={styles.link}>
                                 SZCZEGÓŁY
@@ -175,7 +175,7 @@ export const DashboardView = () => {
             />
             <ActionButton
                 buttonColor="#03DAC5"
-                buttonTextStyle={{color: '#000'}}
+                buttonTextStyle={{ color: '#000' }}
                 bgColor="rgba(0,0,0,0.9)"
             >
                 <ActionButton.Item

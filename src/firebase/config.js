@@ -10,6 +10,4 @@ export const FirebaseApp = initializeApp({
     appId: "1:105359919566:web:b90d0e5f204dae6a36039f"
 });
 
-export const Firestore = initializeFirestore(FirebaseApp, {
-    experimentalForceLongPolling: true,
-});
+export const Firestore = initializeFirestore(FirebaseApp, {});

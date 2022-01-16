@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import {Keyboard, Pressable, Text, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import { Keyboard, Pressable, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import { useAuth } from '../../contexts/auth-context/authContext';
 import { signIn } from '../../contexts/auth-context/actions/signIn';
-import { DashboardView} from "../DashboardView/DashboardView";
+import { DashboardView } from "../DashboardView/DashboardView";
 import { Link } from 'react-router-native';
-import { SIGN_UP_ROUTE } from '../../router/PublicContentRouting';
-import {styles} from './SignInViewStyles';
-import {globalStyles} from "../../global-styles/globalStyles";
-import {SigningTitle} from "../../components/signing-title/SigningTitle";
-import {StatusBar} from "expo-status-bar";
+import { styles } from './SignInViewStyles';
+import { globalStyles } from "../../global-styles/globalStyles";
+import { SigningTitle } from "../../components/signing-title/SigningTitle";
+import { StatusBar } from "expo-status-bar";
+import { PUBLIC_ROUTES } from '../../router/constants';
 
 export const SignInView = () => {
     const [authState, authDispatch] = useAuth();
@@ -37,7 +37,7 @@ export const SignInView = () => {
         >
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <SigningTitle/>
+                    <SigningTitle />
                 </View>
                 <View style={styles.inputContainer}>
                     <TextInput
@@ -63,7 +63,7 @@ export const SignInView = () => {
                     >
                         <Text style={styles.buttonText}>{fetching ? "..." : "Zaloguj się"}</Text>
                     </Pressable>
-                    <Link to={SIGN_UP_ROUTE}>
+                    <Link to={PUBLIC_ROUTES.SIGN_UP_ROUTE}>
                         <Text style={styles.link}>REJESTRACJA</Text>
                     </Link>
                 </View>
@@ -73,4 +73,3 @@ export const SignInView = () => {
     )
 }
 
-    

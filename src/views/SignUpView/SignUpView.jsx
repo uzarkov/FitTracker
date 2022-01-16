@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {Keyboard, TouchableWithoutFeedback, View} from "react-native";
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import { signUp } from '../../contexts/auth-context/actions/signUp';
 import { useAuth } from '../../contexts/auth-context/authContext';
-import {SIGN_IN_ROUTE} from '../../router/PublicContentRouting';
 import { Redirect } from 'react-router-native';
 import { useUserProfile } from '../../contexts/user-profile-context/userProfileContext';
-import {styles} from "./SignUpViewStyles";
-import {SigningTitle} from "../../components/signing-title/SigningTitle";
-import {SignUpForm} from "./SignUpForm/SignUpForm";
-import {StatusBar} from "expo-status-bar";
+import { styles } from "./SignUpViewStyles";
+import { SigningTitle } from "../../components/signing-title/SigningTitle";
+import { SignUpForm } from "./SignUpForm/SignUpForm";
+import { StatusBar } from "expo-status-bar";
+import { PUBLIC_ROUTES } from '../../router/constants';
 
 export const SignUpView = () => {
     const [authState, authDispatch] = useAuth();
@@ -37,7 +37,7 @@ export const SignUpView = () => {
     }
 
     if (signedUp) {
-        return <Redirect to={SIGN_IN_ROUTE} />
+        return <Redirect to={PUBLIC_ROUTES.SIGN_IN_ROUTE} />
     }
 
     return (
@@ -47,15 +47,15 @@ export const SignUpView = () => {
         >
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
-                    <SigningTitle/>
+                    <SigningTitle />
                 </View>
                 <View style={styles.formContainer}>
                     <SignUpForm
-                        onSignUp={onSignUp}
+                        onSubmit={onSignUp}
                         fetching={fetching}
                     />
                 </View>
-                <StatusBar style="auto"/>
+                <StatusBar style="auto" />
             </View>
         </TouchableWithoutFeedback>
     )

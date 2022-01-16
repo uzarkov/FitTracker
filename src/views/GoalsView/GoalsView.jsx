@@ -8,11 +8,12 @@ import { styles } from './GoalsViewStyles';
 import { InfoLabel } from "../../components/common/info-label/InfoLabel";
 import { CircProgress } from "../../components/common/circ-progress/CircProgress";
 import { Link } from "react-router-native";
-import { HISTORY_ROUTE } from '../../router/ProtectedContentRouting';
 import { GoalsModal } from "./GoalsModal/GoalsModal";
 import { useBodyMeasurements } from '../../contexts/body-measurements-context/bodyMeasurementsContext';
 import { fetchLatestBodyMeasurement } from '../../contexts/body-measurements-context/actions/fetchLatestBodyMeasurement';
 import { calculateGoalProgress } from '../../contexts/goal-context/utils';
+import { GOAL_TYPES } from '../../contexts/goal-context/constants';
+import { PROTECTED_ROUTES } from '../../router/constants';
 
 export const GoalsView = () => {
     const [userState] = useAuth();
@@ -50,7 +51,7 @@ export const GoalsView = () => {
                             />
                             <View style={styles.weightGroup}>
                                 <InfoLabel
-                                    text={"Start"}
+                                    text={activeGoal.type === GOAL_TYPES.MAINTAIN_WEIGHT ? "Min" : "Start"}
                                     value={`${activeGoal.startingWeight}kg`}
                                 />
                                 <InfoLabel
@@ -58,7 +59,7 @@ export const GoalsView = () => {
                                     value={`${currentWeight}kg`}
                                 />
                                 <InfoLabel
-                                    text={"Cel"}
+                                    text={activeGoal.type === GOAL_TYPES.MAINTAIN_WEIGHT ? "Max" : "Cel"}
                                     value={`${activeGoal.targetWeight}kg`}
                                 />
                             </View>
@@ -75,7 +76,7 @@ export const GoalsView = () => {
                                 >
                                     <Text style={styles.link}>Zmień cel</Text>
                                 </Pressable>
-                                <Link to={HISTORY_ROUTE}>
+                                <Link to={PROTECTED_ROUTES.HISTORY_ROUTE}>
                                     <Text style={styles.link}>Historia celów</Text>
                                 </Link>
                             </View>
